@@ -1,11 +1,14 @@
-package socialGraph
+package socialgraph
 
 import (
 	"github.com/JKolios/instagraph/instagram"
 	"testing"
 )
 
-func TestAddNode(t *testing.T) {
+var graph *InstagramUserGraph
+var nodes []InstagramUserNode
+
+func TestInstagramUserGraph(t *testing.T) {
 	users := []instagram.User{
 		{InstagramId: 100, UserName: "john", FullName: "John Doe"},
 		{InstagramId: 101, UserName: "jane", FullName: "Jane Doe"},
@@ -13,7 +16,7 @@ func TestAddNode(t *testing.T) {
 		{InstagramId: 100, UserName: "wontadd", FullName: "Won't add"},
 	}
 
-	instagramGraph := NewInstagramUserGraph()
+	graph = NewInstagramUserGraph()
 
 	nodes := []InstagramUserNode{}
 
@@ -22,17 +25,22 @@ func TestAddNode(t *testing.T) {
 	}
 
 	for _, node := range nodes {
-		instagramGraph.AddNode(node)
+		graph.AddNode(node)
 	}
 
-	t.Log(instagramGraph.Nodes())
+	t.Run(_TestAddNode)
 
-	if len(instagramGraph.Nodes()) != 3 {
+}
+
+func _TestAddNode(t *testing.T) {
+
+
+	if len(graph.Nodes()) != 3 {
 		t.Error("Wrong number of nodes added")
 	}
 
 	for i, node := range nodes[:3] {
-		if !instagramGraph.Has(node) {
+		if !graph.Has(node) {
 			t.Errorf("Node %v was not added", i)
 		}
 	}

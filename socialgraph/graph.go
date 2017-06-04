@@ -1,4 +1,4 @@
-package socialGraph
+package socialgraph
 
 import (
 	"github.com/JKolios/instagraph/instagram"
@@ -14,7 +14,6 @@ func (n InstagramUserNode) ID() int {
 }
 
 type InstagramUserGraph struct {
-
 	nodes map[int]graph.Node
 	from  map[int]map[int]graph.Edge
 	to    map[int]map[int]graph.Edge
@@ -27,6 +26,8 @@ func NewInstagramUserGraph() *InstagramUserGraph {
 		nodes: map[int]graph.Node{},
 		from:  map[int]map[int]graph.Edge{},
 		to:    map[int]map[int]graph.Edge{},
+		self: 1.0,
+		absent: 0.0,
 	}
 }
 
@@ -41,14 +42,14 @@ func (g *InstagramUserGraph) AddNode(n InstagramUserNode) {
 	g.to[n.ID()] = make(map[int]graph.Edge)
 }
 
-func (g *InstagramUserGraph) Has(n graph.Node) bool{
+func (g *InstagramUserGraph) Has(n graph.Node) bool {
 
 	_, ok := g.nodes[n.ID()]
 
 	return ok
 }
 
-func (g *InstagramUserGraph) Nodes() []graph.Node{
+func (g *InstagramUserGraph) Nodes() []graph.Node {
 
 	nodes := make([]graph.Node, len(g.from))
 	i := 0
